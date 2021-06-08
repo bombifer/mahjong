@@ -116,14 +116,46 @@ function getInfo() {
 	}
 	
 	var inningText = wind(inning);
-	document.getElementById("inning").innerHTML = `We are in the inning of the ${inningText}.`;
 	
-	document.getElementById("demo1").innerHTML = `<b>${p1name}</b> now has <b>${player1}</b> points. Total Mah-Jongs: ${p1mj}.`;
-	document.getElementById("demo2").innerHTML = `<b>${p2name}</b> now has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
-	document.getElementById("demo3").innerHTML = `<b>${p3name}</b> now has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
-	document.getElementById("demo4").innerHTML = `<b>${p4name}</b> now has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
-	
-	clearChildren(document.getElementById('pointsForm'));
+	if (inning > 4) {
+		document.getElementById("mahjong").style.display="none";
+		
+		var endWinner = "";
+		var endWinnerPoints = 0;
+		var mostMj = "";
+		var mostMjNum = 0;
+		
+		var pointsArray = [[p1name,player1,p1mj],[p2name,player2,p2mj],[p3name,player3,p3mj],[p4name,player4,p4mj]];
+		for (var i = 0; i < 4; i++){
+			if (pointsArray[i][1] > endWinnerPoints) {
+				endWinner = pointsArray[i][0];
+				endWinnerPoints = pointsArray[i][1];
+			}
+			if (pointsArray[i][2] > mostMjNum) {
+				mostMj = pointsArray[i][0];
+				mostMjNum = pointsArray[i][2];
+			}
+		}
+		
+		document.getElementById("endMessage").innerHTML = 
+			`<p>The game has ended!</p> 
+			<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> 
+			<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
+		
+		document.getElementById("endGame").style.display="block";
+		
+	}
+		
+	else {
+		document.getElementById("inning").innerHTML = `We are in the inning of the ${inningText}.`;
+
+		document.getElementById("demo1").innerHTML = `<b>${p1name}</b> now has <b>${player1}</b> points. Total Mah-Jongs: ${p1mj}.`;
+		document.getElementById("demo2").innerHTML = `<b>${p2name}</b> now has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
+		document.getElementById("demo3").innerHTML = `<b>${p3name}</b> now has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
+		document.getElementById("demo4").innerHTML = `<b>${p4name}</b> now has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
+
+		clearChildren(document.getElementById('pointsForm'));
+	}
 }
 
 function clearChildren(element) {
@@ -181,8 +213,4 @@ function mjCounter(player) {
 		case "p3": p3mj++; break;
 		case "p4": p4mj++; break;
 	}
-}
-
-function endGame() {
-	document.getElementById("mahjong").style.display="none";
 }
