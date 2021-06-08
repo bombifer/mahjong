@@ -79,7 +79,7 @@ function getInfo() {
 		results[0][1] = pointsW * 4;
 
 		windRotate();
-		if ((windRotation[0] == 1) && (inning != 1)) inning++;
+		if (windRotation[0] == 1) inning++;
 	}
 
 	else if (mode == "EastWin") {
