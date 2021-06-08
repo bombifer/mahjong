@@ -79,6 +79,7 @@ function getInfo() {
 		results[0][1] = pointsW * 4;
 
 		windRotate();
+		if ((windRotation[0] == 1) && (inning != 1)) inning++;
 	}
 
 	else if (mode == "EastWin") {
@@ -91,8 +92,6 @@ function getInfo() {
 		results[1][1] = (points1 - points2) + (points1 - points3) - (pointsE * 2);
 		results[2][1] = (points2 - points1) + (points2 - points3) - (pointsE * 2);
 		results[3][1] = (points3 - points1) + (points3 - points2) - (pointsE * 2);
-
-
 	}
 
 		displayWinds();
@@ -115,12 +114,16 @@ function getInfo() {
 			break;
 		}
 	}
-	clearChildren(document.getElementById('pointsForm'));
+	
+	var inningText = wind(inning);
+	document.getElementById("inning").innerHTML = `We are in the inning of the ${inningText}.`;
 	
 	document.getElementById("demo1").innerHTML = `<b>${p1name}</b> now has <b>${player1}</b> points. Total Mah-Jongs: ${p1mj}.`;
 	document.getElementById("demo2").innerHTML = `<b>${p2name}</b> now has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
 	document.getElementById("demo3").innerHTML = `<b>${p3name}</b> now has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
 	document.getElementById("demo4").innerHTML = `<b>${p4name}</b> now has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
+	
+	clearChildren(document.getElementById('pointsForm'));
 }
 
 function clearChildren(element) {
@@ -178,5 +181,8 @@ function mjCounter(player) {
 		case "p3": p3mj++; break;
 		case "p4": p4mj++; break;
 	}
+}
 
+function endGame() {
+	document.getElementById("mahjong").style.display="none";
 }
