@@ -19,7 +19,8 @@
 </div>
 
 <div id="mahjong" style="display:none;">
-	<h4>Enter the points and check off the Mah-Jong winner:</h4>
+	<h4>Enter the points and check off the Mah-Jong winner</h4>
+	<h4 id="inning">We are in the inning of the East</h4>
 	<div id="pointsForm">
 		<b><label for="points1">Player 1</label></b><input type="text" id="points1">
 		<input type="checkbox" id="win" value="p1"> <div id=p1w>East</div><br>
@@ -33,7 +34,7 @@
 		<b><label for="points4">Player 4></label></b> <input type="text" id="points4">
 		<input type="checkbox" id="win" value="p4"> <div id=p4w>North</div><br><br>
 
-		<button onclick="getInfo()">Calculate points</button>
+		<button id="calculatePoints" onclick="getInfo()">Calculate points</button>
 	</div>
 
 	<div id="score">
@@ -42,8 +43,17 @@
 		<p id="demo3"></p>
 		<p id="demo4"></p>
 	</div>
+	
+	<button onclick="window.location.reload(true)" value="Reload Page" type="button">Click to start a new game</button>
 
+</div>
+	
+<div id="endGame" style="display:none; padding-top: 30px;">
+	<h2 id="endMessage">The game has ended!</h2>
+	
 	<button onclick="window.location.reload(true)" value="Reload Page" type="button">Click to start a new game</button>
 </div>
+
+	
 </body>
 </html>
