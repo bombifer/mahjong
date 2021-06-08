@@ -124,6 +124,7 @@ function getInfo() {
 		var endWinnerPoints = 0;
 		var mostMj = "";
 		var mostMjNum = 0;
+		var topMj = true;
 		
 		var pointsArray = [[p1name,player1,p1mj],[p2name,player2,p2mj],[p3name,player3,p3mj],[p4name,player4,p4mj]];
 		for (var i = 0; i < 4; i++){
@@ -131,6 +132,7 @@ function getInfo() {
 				endWinner = pointsArray[i][0];
 				endWinnerPoints = pointsArray[i][1];
 			}
+			if ((pointsArray[i][2] == mostMjNum) && pointsArray[i][2] != 0) topMj = false;
 			if (pointsArray[i][2] > mostMjNum) {
 				mostMj = pointsArray[i][0];
 				mostMjNum = pointsArray[i][2];
@@ -139,8 +141,8 @@ function getInfo() {
 		
 		document.getElementById("endMessage").innerHTML = 
 			`<p>The game has ended!</p> 
-			<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> 
-			<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
+			<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> `;
+		if (topMj) document.getElementById("mostMj").innerHTML = `<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
 		
 		document.getElementById("endGame").style.display="block";
 		
