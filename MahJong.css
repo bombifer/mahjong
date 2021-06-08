@@ -1,17 +1,11 @@
+@media only screen and (min-width: 800px) {
+	body {
+		width: 60%;
+		margin: 20px auto;
+		font-family: Calibri;
+	}
+}
+
 body {
-	width: 50%;
-	margin: auto;
-	margin-top: 20px;
-	font-family: Calibri;
-	font-size: 16px;
-}
-
-h2 {
-	margin-bottom: 50px;
-	font-size: 26px;
-}
-
-
-p {
 	font-size: 16px;
 }
