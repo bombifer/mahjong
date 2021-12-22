@@ -39,11 +39,19 @@ function continueGame() {
 	var previousInning = document.querySelector('input[name="inningCheck"]:checked');   
 	inning = Number(previousInning.value);
 
+	var windTurn = Number(document.getElementById('windTurn').value);
+
+	windRotation[0] = windTurn;
+
+	for (var i=1;i<4;i++) {
+		if (windRotation[i-1] == 4) windRotation[i] = 1;
+		else windRotation[i] = windRotation[i-1] + 1;
+	}
 
 	displayResults();
 }
 
-function getInfo() {
+function play() {
 	var results = [
 		["p1",document.getElementById("points1").value,windRotation[0]],
 		["p2",document.getElementById("points2").value,windRotation[1]],
@@ -102,9 +110,6 @@ function getInfo() {
 		results[3][1] = (points3 - points1) + (points3 - points2) - (pointsE * 2);
 	}
 
-		displayWinds();
-
-
 	for (i = 0; i < 4; i++) {
 		var ptCount = results[i][1];
 		switch(results[i][0]) {
@@ -124,32 +129,8 @@ function getInfo() {
 	}
 	
 	if (inning > 4) {
+		endGame();
 		hideDiv("mahjong");
-		
-		var endWinner = "";
-		var endWinnerPoints = 0;
-		var mostMj = "";
-		var mostMjNum = 0;
-		var topMj = true;
-		
-		var pointsArray = [[p1name,player1,p1mj],[p2name,player2,p2mj],[p3name,player3,p3mj],[p4name,player4,p4mj]];
-		for (var i = 0; i < 4; i++){
-			if (pointsArray[i][1] > endWinnerPoints) {
-				endWinner = pointsArray[i][0];
-				endWinnerPoints = pointsArray[i][1];
-			}
-			if ((pointsArray[i][2] == mostMjNum) && pointsArray[i][2] != 0) topMj = false;
-			if (pointsArray[i][2] > mostMjNum) {
-				mostMj = pointsArray[i][0];
-				mostMjNum = pointsArray[i][2];
-			}
-		}
-		
-		document.getElementById("endMessage").innerHTML = 
-			`<p>The game has ended!</p> 
-			<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> `;
-		if (topMj) document.getElementById("mostMj").innerHTML = `<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
-		
 		showDiv("endGame");		
 	}
 		
@@ -228,6 +209,33 @@ function displayResults() {
 	document.getElementById("demo2").innerHTML = `<b>${p2name}</b> has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
 	document.getElementById("demo3").innerHTML = `<b>${p3name}</b> has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
 	document.getElementById("demo4").innerHTML = `<b>${p4name}</b> has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
+
+	displayWinds();
+}
+
+function endGame() {
+	var endWinner = "";
+	var endWinnerPoints = 0;
+	var mostMj = "";
+	var mostMjNum = 0;
+	var topMj = true;
+		
+	var pointsArray = [[p1name,player1,p1mj],[p2name,player2,p2mj],[p3name,player3,p3mj],[p4name,player4,p4mj]];
+		for (var i = 0; i < 4; i++) {
+			if (pointsArray[i][1] > endWinnerPoints) {
+				endWinner = pointsArray[i][0];
+				endWinnerPoints = pointsArray[i][1];
+			}
+			if ((pointsArray[i][2] == mostMjNum) && pointsArray[i][2] != 0) topMj = false;
+			if (pointsArray[i][2] > mostMjNum) {
+				mostMj = pointsArray[i][0];
+				mostMjNum = pointsArray[i][2];
+			}
+		}
+	document.getElementById("endMessage").innerHTML = 
+		`<p>The game has ended!</p> 
+		<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> `;
+	if (topMj) document.getElementById("mostMj").innerHTML = `<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
 }
 
 function showDiv(elementID) {
