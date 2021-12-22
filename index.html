@@ -18,10 +18,15 @@
 		</div>
 
 		<p><b>Are you continuing a previous game?</b> <input type="radio" id="no" value="no" name="continue" checked="checked" onclick="hideDiv('continueForm')"><label for="no">No</label><input type="radio" id="yes" value="yes" name="continue" onclick="showDiv('continueForm')"><label for="yes">Yes</label></p>
-		<p style="color:red;">Note: for technical reasons you can only resume a game if it was paused right at the end of an inning</p>
 		
 		<div id="continueForm" style="display: none;">
-			<label for="p1pts">Player 1 Points: </label><input type="text" id="p1pts"><br>
+			<label for="p1pts">Player 1 Points: </label><input type="text" id="p1pts">
+			<label for="windTurn">Player 1 Wind Turn: </label><select name="windTurn" id="windTurn">
+				<option value="1" id="east">East</option>
+				<option value="2" id ="south">South</option>
+				<option value="3" id ="west">West</option>
+				<option value="4" id ="north">North</option>
+			</select><br>
 			<label for="p2pts">Player 2 Points: </label><input type="text" id="p2pts"><br>
 			<label for="p3pts">Player 3 Points: </label><input type="text" id="p3pts"><br>
 			<label for="p4pts">PLayer 4 Points: </label><input type="text" id="p4pts"><br><br>
@@ -51,7 +56,7 @@
 		<b><label for="points4">Player 4></label></b> <input type="text" id="points4">
 		<input type="radio" id="p4" name="win" value="p4"><div id="p4w">North</div><br>
 	</div>
-	<button id="calculatePoints" onclick="getInfo()" style="color:green; font-weight: bold;">Calculate points</button>
+	<button id="calculatePoints" onclick="play()" style="color:green; font-weight: bold;">Calculate points</button>
 
 	<div id="score">
 		<p id="demo1"></p>
