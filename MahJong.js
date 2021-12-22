@@ -8,29 +8,42 @@ var p3mj = 0;
 var p4mj = 0;
 var windRotation = [1,2,3,4];
 var inning = 1;
+var p1name = "";
+var p2name = "";
+var p3name = "";
+var p4name = "";
 
 
 function newLabels() {
-	var p1name = document.getElementById("p1name").value;
-	var p2name = document.getElementById("p2name").value;
-	var p3name = document.getElementById("p3name").value;
-	var p4name = document.getElementById("p4name").value;
+	p1name = document.getElementById("p1name").value;
+	p2name = document.getElementById("p2name").value;
+	p3name = document.getElementById("p3name").value;
+	p4name = document.getElementById("p4name").value;
 
 	document.querySelector("label[for=points1]").innerHTML = p1name;
 	document.querySelector("label[for=points2]").innerHTML = p2name;
 	document.querySelector("label[for=points3]").innerHTML = p3name;
 	document.querySelector("label[for=points4]").innerHTML = p4name;
 
-	document.getElementById("welcome").style.display="none";
-	document.getElementById("mahjong").style.display="block";
+	var continueQ = document.querySelector('input[name="continue"]:checked');
+	if (continueQ.value == "yes") continueGame();
+	hideDiv("welcome"); showDiv("mahjong");
+}
+
+function continueGame() {
+	player1 = Number(document.getElementById("p1pts").value);
+	player2 = Number(document.getElementById("p2pts").value);
+	player3 = Number(document.getElementById("p3pts").value);
+	player4 = Number(document.getElementById("p4pts").value);
+
+	var previousInning = document.querySelector('input[name="inningCheck"]:checked');   
+	inning = Number(previousInning.value);
+
+
+	displayResults();
 }
 
 function getInfo() {
-	var p1name = document.getElementById("p1name").value;
-	var p2name = document.getElementById("p2name").value;
-	var p3name = document.getElementById("p3name").value;
-	var p4name = document.getElementById("p4name").value;
-
 	var results = [
 		["p1",document.getElementById("points1").value,windRotation[0]],
 		["p2",document.getElementById("points2").value,windRotation[1]],
@@ -38,12 +51,7 @@ function getInfo() {
 		["p4",document.getElementById("points4").value,windRotation[3]],
 	];
 	
-	const value = document.querySelectorAll('input[id="win"]:checked');
-	let values = [];
-	value.forEach((checkbox) => {
-		values.push(checkbox.value);
-		});
-	var win = values[0];
+	var win = document.querySelector('input[name="win"]:checked').value;
 	mjCounter(win);
 
 	var winner;
@@ -115,10 +123,8 @@ function getInfo() {
 		}
 	}
 	
-	var inningText = wind(inning);
-	
 	if (inning > 4) {
-		document.getElementById("mahjong").style.display="none";
+		hideDiv("mahjong");
 		
 		var endWinner = "";
 		var endWinnerPoints = 0;
@@ -144,19 +150,18 @@ function getInfo() {
 			<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> `;
 		if (topMj) document.getElementById("mostMj").innerHTML = `<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
 		
-		document.getElementById("endGame").style.display="block";
-		
+		showDiv("endGame");		
 	}
 		
 	else {
-		document.getElementById("inning").innerHTML = `We are in the inning of the ${inningText}.`;
-
-		document.getElementById("demo1").innerHTML = `<b>${p1name}</b> now has <b>${player1}</b> points. Total Mah-Jongs: ${p1mj}.`;
-		document.getElementById("demo2").innerHTML = `<b>${p2name}</b> now has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
-		document.getElementById("demo3").innerHTML = `<b>${p3name}</b> now has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
-		document.getElementById("demo4").innerHTML = `<b>${p4name}</b> now has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
-
+		displayResults();
 		clearChildren(document.getElementById('pointsForm'));
+	}
+}
+
+function newGameReload() {
+	if(confirm('Are you sure you want to start a new game? All data for this game will be lost')) {
+		window.location.reload(true);
 	}
 }
 
@@ -215,4 +220,19 @@ function mjCounter(player) {
 		case "p3": p3mj++; break;
 		case "p4": p4mj++; break;
 	}
+}
+
+function displayResults() {
+	document.getElementById("inning").innerHTML = `We are in the inning of the ${wind(inning)}.`;
+	document.getElementById("demo1").innerHTML = `<b>${p1name}</b> has <b>${player1}</b> points. Total Mah-Jongs: ${p1mj}.`;
+	document.getElementById("demo2").innerHTML = `<b>${p2name}</b> has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
+	document.getElementById("demo3").innerHTML = `<b>${p3name}</b> has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
+	document.getElementById("demo4").innerHTML = `<b>${p4name}</b> has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
+}
+
+function showDiv(elementID) {
+	document.getElementById(elementID).style.display="block";
+}
+function hideDiv(elementID) {
+	document.getElementById(elementID).style.display="none";
 }
