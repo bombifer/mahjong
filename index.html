@@ -9,33 +9,49 @@
 <body>
 <h2>Mah-Jong Points Calculator</h2>
 <div id="welcome">
-	<h4>Enter player names in the order of the winds:</h4>
-	<div id="welcomeForm">
-		Player 1 (East) Name: <input type="text" id="p1name"><br>
-		Player 2 (South) Name: <input type="text" id="p2name"><br>
-		Player 3 (West) Name: <input type="text" id="p3name"><br>
-		Player 4 (North) Name: <input type="text" id="p4name"><br>
-		<button onclick="newLabels()">Submit</button>
-	</div>
-</div>
+		<h4>Enter player names in the order of the winds:</h4>
+		<div id="playerNames">
+			Player 1 (East) Name: <input type="text" id="p1name"><br>
+			Player 2 (South) Name: <input type="text" id="p2name"><br>
+			Player 3 (West) Name: <input type="text" id="p3name"><br>
+			Player 4 (North) Name: <input type="text" id="p4name"><br>
+		</div>
 
+		<p><b>Are you continuing a previous game?</b> <input type="radio" id="no" value="no" name="continue" checked="checked" onclick="hideDiv('continueForm')"><label for="no">No</label><input type="radio" id="yes" value="yes" name="continue" onclick="showDiv('continueForm')"><label for="yes">Yes</label></p>
+		<p style="color:red;">Note: for technical reasons you can only resume a game if it was paused right at the end of an inning</p>
+		
+		<div id="continueForm" style="display: none;">
+			<label for="p1pts">Player 1 Points: </label><input type="text" id="p1pts"><br>
+			<label for="p2pts">Player 2 Points: </label><input type="text" id="p2pts"><br>
+			<label for="p3pts">Player 3 Points: </label><input type="text" id="p3pts"><br>
+			<label for="p4pts">PLayer 4 Points: </label><input type="text" id="p4pts"><br><br>
+			
+			<b>Inning wind:</b>
+			<input type="radio" id="east" name="inningCheck" value="1"><label for="east">East</label>
+			<input type="radio" id="south" name="inningCheck" value="2"><label for="south">South</label>
+			<input type="radio" id="west" name="inningCheck" value="3"><label for="west">West</label>
+			<input type="radio" id="north" name="inningCheck" value="4"><label for="north">North</label>
+		</div>
+		<br>
+		<button onclick="newLabels()">Let's go</button>
+	
+</div>
 <div id="mahjong" style="display:none;">
-	<h4>Enter the points and check off the Mah-Jong winner.</h4>
-	<h4 id="inning" style="padding-top:20px;">We are in the inning of the East.</h4>
+	<h4 id="inning" style="padding-top:30px;">We are in the inning of the East.</h4>
 	<div id="pointsForm">
 		<b><label for="points1">Player 1</label></b><input type="text" id="points1">
-		<input type="checkbox" id="win" value="p1"> <div id=p1w>East</div><br>
+		<input type="radio" id="p1" name="win" value="p1"><div id="p1w">East</div><br>
 
 		<b><label for="points2">Player 2</label></b> <input type="text" id="points2">
-		<input type="checkbox" id="win" value="p2"> <div id=p2w>South</div><br>
+		<input type="radio" id="p2" name="win" value="p2"><div id="p2w">South</div><br>
 
 		<b><label for="points3">Player 3</label></b> <input type="text" id="points3">
-		<input type="checkbox" id="win" value="p3"> <div id=p3w>West</div><br>
+		<input type="radio" id="p3" name="win" value="p3"><div id="p3w">West</div><br>
 
 		<b><label for="points4">Player 4></label></b> <input type="text" id="points4">
-		<input type="checkbox" id="win" value="p4"> <div id=p4w>North</div><br><br>
+		<input type="radio" id="p4" name="win" value="p4"><div id="p4w">North</div><br>
 	</div>
-	<button id="calculatePoints" onclick="getInfo()">Calculate points</button>
+	<button id="calculatePoints" onclick="getInfo()" style="color:green; font-weight: bold;">Calculate points</button>
 
 	<div id="score">
 		<p id="demo1"></p>
@@ -44,14 +60,14 @@
 		<p id="demo4"></p>
 	</div>
 	
-	<button onclick="window.location.reload(true)" value="Reload Page" type="button">Click to start a new game</button>
+	<button onclick="newGameReload()" value="newgame" type="button" style="margin-top:40px; color:red;" >Start a new game</button>
 
 </div>
 	
 <div id="endGame" style="display:none; padding-top: 30px;">
 	<h2 id="endMessage">The game has ended!</h2>
 	<h2 id="mostMj"></h2>
-	<button onclick="window.location.reload(true)" value="Reload Page" type="button" style="margin-top:40px; color:red;">Click to start a new game</button>
+	<button onclick="window.location.reload(true)" value="Reload Page" type="button">Start a new game</button>
 </div>
 
 	
