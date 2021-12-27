@@ -1,17 +1,17 @@
-var player1 = 0;
-var player2 = 0;
-var player3 = 0;
-var player4 = 0;
+var p1points = 0;
+var p2points = 0;
+var p3points = 0;
+var p4points = 0;
 var p1mj = 0;
 var p2mj = 0;
 var p3mj = 0;
 var p4mj = 0;
-var windRotation = [1,2,3,4];
-var inning = 1;
 var p1name = "";
 var p2name = "";
 var p3name = "";
 var p4name = "";
+var windRotation = [1,2,3,4];
+var inning = 1;
 
 
 function newLabels() {
@@ -31,10 +31,10 @@ function newLabels() {
 }
 
 function continueGame() {
-	player1 = Number(document.getElementById("p1pts").value);
-	player2 = Number(document.getElementById("p2pts").value);
-	player3 = Number(document.getElementById("p3pts").value);
-	player4 = Number(document.getElementById("p4pts").value);
+	p1points = Number(document.getElementById("p1pts").value);
+	p2points = Number(document.getElementById("p2pts").value);
+	p3points = Number(document.getElementById("p3pts").value);
+	p4points = Number(document.getElementById("p4pts").value);
 
 	var previousInning = document.querySelector('input[name="inningCheck"]:checked');   
 	inning = Number(previousInning.value);
@@ -114,16 +114,16 @@ function play() {
 		var ptCount = results[i][1];
 		switch(results[i][0]) {
 			case "p1":
-			player1 += ptCount;
+			p1points += ptCount;
 			break;
 			case "p2":
-			player2 += ptCount;
+			p2points += ptCount;
 			break;
 			case "p3":
-			player3 += ptCount;
+			p3points += ptCount;
 			break;
 			case "p4":
-			player4 += ptCount;
+			p4points += ptCount;
 			break;
 		}
 	}
@@ -205,10 +205,10 @@ function mjCounter(player) {
 
 function displayResults() {
 	document.getElementById("inning").innerHTML = `We are in the inning of the ${wind(inning)}.`;
-	document.getElementById("demo1").innerHTML = `<b>${p1name}</b> has <b>${player1}</b> points. Total Mah-Jongs: ${p1mj}.`;
-	document.getElementById("demo2").innerHTML = `<b>${p2name}</b> has <b>${player2}</b> points. Total Mah-Jongs: ${p2mj}.`;
-	document.getElementById("demo3").innerHTML = `<b>${p3name}</b> has <b>${player3}</b> points. Total Mah-Jongs: ${p3mj}.`;
-	document.getElementById("demo4").innerHTML = `<b>${p4name}</b> has <b>${player4}</b> points. Total Mah-Jongs: ${p4mj}.`;
+	document.getElementById("demo1").innerHTML = `<b>${p1name}</b> has <b>${p1points}</b> points. Total Mah-Jongs: ${p1mj}.`;
+	document.getElementById("demo2").innerHTML = `<b>${p2name}</b> has <b>${p2points}</b> points. Total Mah-Jongs: ${p2mj}.`;
+	document.getElementById("demo3").innerHTML = `<b>${p3name}</b> has <b>${p3points}</b> points. Total Mah-Jongs: ${p3mj}.`;
+	document.getElementById("demo4").innerHTML = `<b>${p4name}</b> has <b>${p4points}</b> points. Total Mah-Jongs: ${p4mj}.`;
 
 	displayWinds();
 }
@@ -220,7 +220,7 @@ function endGame() {
 	var mostMjNum = 0;
 	var topMj = true;
 		
-	var pointsArray = [[p1name,player1,p1mj],[p2name,player2,p2mj],[p3name,player3,p3mj],[p4name,player4,p4mj]];
+	var pointsArray = [[p1name,p1points,p1mj],[p2name,p2points,p2mj],[p3name,p3points,p3mj],[p4name,p4points,p4mj]];
 		for (var i = 0; i < 4; i++) {
 			if (pointsArray[i][1] > endWinnerPoints) {
 				endWinner = pointsArray[i][0];
@@ -233,8 +233,13 @@ function endGame() {
 			}
 		}
 	document.getElementById("endMessage").innerHTML = 
-		`<p>The game has ended!</p> 
-		<p>The winner is ${endWinner} with a total of ${endWinnerPoints} points.</p> `;
+		`<p>The game has ended.</p>
+		<h2><b>The winner is ${endWinner}!</b></h2> 
+		<p>${p1name} has ${p1points} points. Total Mah-Jongs: ${p1mj}.</p>
+		<p>${p2name} has ${p2points} points. Total Mah-Jongs: ${p2mj}.</p>
+		<p>${p3name} has ${p3points} points. Total Mah-Jongs: ${p3mj}.</p>
+		<p>${p4name} has ${p4points} points. Total Mah-Jongs: ${p4mj}.</p>
+		`;
 	if (topMj) document.getElementById("mostMj").innerHTML = `<p>The player with the most numbers of Mah-Jong wins was ${mostMj} with ${mostMjNum} wins.</p>`;
 }
 
